@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta name="darkreader-lock" />
+    <meta charset="UTF-8" />
+    <meta name="author" content="arashaltafi" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  viewport-fit=cover, user-scalable=no" />
+    <meta name="google" value="notranslate" />
+
+    <title>Error Link Shortener</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
+
+    <link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet">
+
+    <style>
+        html {
+            font-family: 'Vazir';
+        }
+
+        * {
+            font-family: 'Vazir';
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #94A3B8;
+            font-family: 'Vazir';
+            direction: rtl;
+        }
+
+        .error-container {
+            text-align: center;
+        }
+
+        .error-container img {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        .error-container button {
+            display: block;
+            width: 300px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .error-container button {
+            background-color: #F43F5E;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .error-container button:hover {
+            background-color: #E11D48;
+        }
+
+        .error-message {
+            color: #F8FAFC;
+            margin-top: 30;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="error-container">
+        <img src="https://arashaltafi.ir/images/error.jpg" alt="Logo">
+        <button id="back">Back To Home</button>
+        <h1 class="error-message">Short Link is Wrong !!!</h1>
+    </div>
+
+    <script>
+        document.addEventListener("contextmenu", (event) =>
+            event.preventDefault()
+        );
+
+        document.onkeydown = function (e) {
+            if (event.keyCode == 123) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == "I".charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == "C".charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == "J".charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.keyCode == "U".charCodeAt(0)) {
+                return false;
+            }
+        };
+    </script>
+
+    <script>
+        document.getElementById("back").addEventListener("click", () => {
+            window.location.href = "http://localhost:8080/";
+        });
+    </script>
+</body>
+
+</html>

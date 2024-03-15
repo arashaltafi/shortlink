@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+
+<head>
+    <meta name="darkreader-lock" />
+    <meta charset="UTF-8" />
+    <meta name="author" content="arashaltafi" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  viewport-fit=cover, user-scalable=no" />
+    <meta name="google" value="notranslate" />
+
+    <title>Link Shortener</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
+
+    <link href="https://v1.fontapi.ir/css/Vazir" rel="stylesheet">
+
+    <style>
+        html {
+            font-family: 'Vazir';
+        }
+
+        * {
+            font-family: 'Vazir';
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #CBD5E1;
+            font-family: 'Vazir';
+            direction: rtl;
+        }
+
+        .link-container {
+            text-align: center;
+        }
+
+        .link-container img {
+            max-width: 200px;
+            /* Adjust the width as needed */
+            margin-bottom: 20px;
+            /* Add some space between image and inputs */
+        }
+
+        .link-container input[type="text"],
+        .link-container input[type="password"],
+        .link-container button {
+            display: block;
+            width: 300px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .link-container button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .link-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: #F87171;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .success-message {
+            color: #22C55E;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .link-message {
+            color: #3B82F6;
+            margin-top: 50px;
+            text-decoration: underline;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="link-container">
+        <img src="https://arashaltafi.ir/images/login.jpg" alt="Logo">
+        <form id="linkForm" autoComplete="off">
+            <input type="text" id="link" placeholder="لینک را وارد کنید" required>
+            <button type="submit">کوتاه کن</button>
+        </form>
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+        <div id="linkMessage" class="link-message"></div>
+    </div>
+
+    <script>
+        document.addEventListener("contextmenu", (event) =>
+            event.preventDefault()
+        );
+
+        document.onkeydown = function (e) {
+            if (event.keyCode == 123) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == "I".charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == "C".charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == "J".charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.keyCode == "U".charCodeAt(0)) {
+                return false;
+            }
+        };
+    </script>
+
+    <script>
+        document.getElementById("linkForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let link = document.getElementById("link").value;
+
+            axios.get("http://localhost:8080/shorten?link=" + link)
+                .then(response => {
+                    if (response.status === 200) {
+                        const token = response.data;
+                        document.getElementById("errorMessage").innerText = '';
+                        document.getElementById("successMessage").innerText = response.data.message;
+                        document.getElementById("linkMessage").innerText = `http://localhost:8080/${response.data.link}`;
+                    } else {
+                        document.getElementById("successMessage").innerText = '';
+                        document.getElementById("linkMessage").innerText = '';
+                        document.getElementById("errorMessage").innerText = response.data.message;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("successMessage").innerText = '';
+                    document.getElementById("errorMessage").innerText = error.response.data.message;
+                });
+        });
+
+        document.getElementById("linkMessage").addEventListener("click", (e) => {
+            window.open(e.currentTarget.innerText, '_blank');
+        })
+    </script>
+</body>
+
+</html>
