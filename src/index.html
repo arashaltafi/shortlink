@@ -132,13 +132,13 @@
 
             let link = document.getElementById("link").value;
 
-            axios.get("http://localhost:8080/shorten?link=" + link)
+            axios.get("https://shortlink.liara.run/shorten?link=" + link)
                 .then(response => {
                     if (response.status === 200) {
                         const token = response.data;
                         document.getElementById("errorMessage").innerText = '';
                         document.getElementById("successMessage").innerText = response.data.message;
-                        document.getElementById("linkMessage").innerText = `http://localhost:8080/${response.data.link}`;
+                        document.getElementById("linkMessage").innerText = `https://shortlink.liara.run/${response.data.link}`;
                     } else {
                         document.getElementById("successMessage").innerText = '';
                         document.getElementById("linkMessage").innerText = '';
